@@ -15,6 +15,11 @@
         <div class="container">
             @include('guest.dashboard.partials.stats')
             @include('guest.dashboard.partials.data.activities')
+            @include('guest.dashboard.partials.data.announcements')
+            @include('guest.dashboard.partials.about')
+            @include('guest.dashboard.partials.how-to-work')
+            @include('guest.dashboard.partials.questions')
+            @include('guest.dashboard.partials.data.recent-activities')
         </div>
     </main>
 
