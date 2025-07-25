@@ -11,6 +11,7 @@
     @yield('content')
     <script>
         const sampleActivities = @json($ekskuls);
+        const sampleAnnouncements = @json($announcements);
     </script>
     <script src="{{ asset('scripts/guest.js') }}"></script>
 </body>

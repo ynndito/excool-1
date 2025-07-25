@@ -229,94 +229,7 @@ function validateForm(form) {
 
 // Extended Sample Data
 console.log(sampleActivities);
-
-const sampleAnnouncements = [
-    {
-        id: 1,
-        judul: "Pendaftaran Turnamen Basket Dibuka",
-        isi: "Pendaftaran untuk turnamen basket antar sekolah tahunan sekarang dibuka. Ini adalah kesempatan bagus untuk menunjukkan keterampilan dan mewakili sekolah kita. Daftar sebelum 15 Maret!",
-        tanggal: "2024-03-01",
-        ekskul: "Klub Basket",
-    },
-    {
-        id: 2,
-        judul: "Pertunjukan Musim Semi Komunitas Drama",
-        isi: "Bergabunglah dengan kami untuk pertunjukan musim semi yang spektakuler 'Romeo dan Juliet' pada 20 April di auditorium sekolah. Tiket tersedia di kantor utama.",
-        tanggal: "2024-03-05",
-        ekskul: "Komunitas Drama",
-    },
-    {
-        id: 3,
-        judul: "Workshop Persiapan Pameran Sains",
-        isi: "Workshop wajib untuk semua anggota Olimpiade Sains pada 12 Maret untuk mempersiapkan pameran sains regional yang akan datang. Bawa ide proyek Anda!",
-        tanggal: "2024-03-08",
-        ekskul: "Olimpiade Sains",
-    },
-    {
-        id: 4,
-        judul: "Pameran Fotografi",
-        isi: "Kirimkan foto terbaik Anda untuk pameran fotografi tahunan kami. Tema: 'Kehidupan di Sekolah'. Batas waktu pengiriman: 25 Maret.",
-        tanggal: "2024-03-10",
-        ekskul: "Klub Fotografi",
-    },
-    // Additional announcements
-    {
-        id: 5,
-        judul: "Kompetisi Robotika Nasional",
-        isi: "Tim robotika sekolah akan mengikuti kompetisi nasional bulan depan. Dukungan dan doa dari seluruh warga sekolah sangat diharapkan!",
-        tanggal: "2024-03-12",
-        ekskul: "Klub Robotika",
-    },
-    {
-        id: 6,
-        judul: "Konser Paduan Suara",
-        isi: "Paduan suara akan mengadakan konser amal untuk membantu korban bencana alam. Tiket dapat dibeli di sekretariat sekolah mulai hari ini.",
-        tanggal: "2024-03-14",
-        ekskul: "Paduan Suara",
-    },
-    {
-        id: 7,
-        judul: "Lomba Puisi Tingkat Provinsi",
-        isi: "Anggota klub sastra terpilih akan mewakili sekolah dalam lomba puisi tingkat provinsi. Persiapan intensif dimulai minggu depan.",
-        tanggal: "2024-03-16",
-        ekskul: "Klub Sastra",
-    },
-    {
-        id: 8,
-        judul: "Turnamen Futsal Antar Kelas",
-        isi: "Turnamen futsal antar kelas akan dimulai bulan depan. Setiap kelas dapat mendaftarkan satu tim. Hadiah menarik menanti pemenang!",
-        tanggal: "2024-03-18",
-        ekskul: "Tim Futsal",
-    },
-    {
-        id: 9,
-        judul: "Aksi Penanaman Pohon",
-        isi: "Klub lingkungan mengajak seluruh warga sekolah untuk berpartisipasi dalam aksi penanaman 1000 pohon di area sekolah dan sekitarnya.",
-        tanggal: "2024-03-20",
-        ekskul: "Klub Lingkungan",
-    },
-    {
-        id: 10,
-        judul: "English Speech Contest",
-        isi: "Kompetisi pidato bahasa Inggris tingkat sekolah akan diadakan bulan depan. Pendaftaran dibuka untuk semua siswa yang berminat.",
-        tanggal: "2024-03-22",
-        ekskul: "Klub Bahasa Inggris",
-    },
-    {
-        id: 11,
-        judul: "Olimpiade Matematika Regional",
-        isi: "Tim olimpiade matematika berhasil lolos ke tingkat regional. Persiapan intensif dan bimbingan khusus akan diberikan kepada peserta.",
-        tanggal: "2024-03-24",
-        ekskul: "Klub Matematika",
-    },
-    {
-        id: 12,
-        judul: "Festival Tari Nusantara",
-        isi: "Klub tari tradisional akan tampil dalam Festival Tari Nusantara tingkat kota. Latihan tambahan akan diadakan setiap hari Sabtu.",
-        tanggal: "2024-03-26",
-        ekskul: "Klub Tari Tradisional",
-    },
-];
+console.log(sampleAnnouncements);
 
 const sampleRecentActivities = [
     {
@@ -544,12 +457,12 @@ function loadAnnouncements() {
                         <div>
                             <h3 class="card-title">${announcement.judul}</h3>
                         </div>
-                        <span class="badge">${announcement.ekskul}</span>
+                        <span class="badge">${announcement.ekskul.nama}</span>
                     </div>
                     <p class="card-description">${announcement.isi}</p>
                     <div class="card-meta">
                         <span>📅 ${new Date(
-                            announcement.tanggal
+                            announcement.tanggal_pengumuman
                         ).toLocaleDateString("id-ID", {
                             year: "numeric",
                             month: "long",
