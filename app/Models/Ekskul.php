@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Ekskul extends Model
 {
     use HasFactory;
+    
+    protected $table = 'ekskuls';
+
     protected $fillable = ['nama', 'deskripsi', 'pembina_id'];
 
     # Relasi: ekskul dimiliki oleh pembina dari user

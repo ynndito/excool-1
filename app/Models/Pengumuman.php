@@ -9,6 +9,8 @@ class Pengumuman extends Model
 {
     use HasFactory;
 
+    protected $table = 'pengumumans';
+
     protected $fillable = [
         'ekskul_id',
         'judul',
@@ -18,6 +20,6 @@ class Pengumuman extends Model
 
     # Relasi: Pengumuman dimiliki oleh suatu ekskul
     public function ekskul(){
-        $this->belongsTo(Ekskul::class);
+        return $this->belongsTo(Ekskul::class);
     }
 }

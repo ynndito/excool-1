@@ -9,6 +9,8 @@ class Absensi extends Model
 {
     use HasFactory;
 
+    protected $table = 'absensis';
+
     protected $fillable = [
         'user_id',
         'ekskul_id',
