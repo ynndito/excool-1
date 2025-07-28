@@ -20,11 +20,11 @@ class Kegiatan extends Model
 
     # Relasi: kegiatan milik ekskul
     public function ekskul(){
-        $this->belongsTo(Ekskul::class);
+        return $this->belongsTo(Ekskul::class);
     }
 
     # Relasi: kegiatan di upload oleh uploader dari user
     public function uploader(){
-        $this->belongsTo(Ekskul::class, 'uploaded_by');
+        return $this->belongsTo(Ekskul::class, 'uploaded_by');
     }
 }
