@@ -12,6 +12,7 @@
     <script>
         const sampleActivities = @json($ekskuls);
         const sampleAnnouncements = @json($announcements);
+        const sampleRecentActivities = @json($recentActivities);
     </script>
     <script src="{{ asset('scripts/guest.js') }}"></script>
 </body>

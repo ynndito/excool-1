@@ -227,94 +227,6 @@ function validateForm(form) {
     return isValid;
 }
 
-// Extended Sample Data
-console.log(sampleActivities);
-console.log(sampleAnnouncements);
-
-const sampleRecentActivities = [
-    {
-        id: 1,
-        judul: "Sesi Latihan Basket",
-        deskripsi:
-            "Sesi latihan mingguan yang fokus pada strategi bertahan dan koordinasi tim. Partisipasi yang bagus dengan 20+ anggota berpartisipasi!",
-        tanggal: "2024-03-08",
-        ekskul: "Klub Basket",
-    },
-    {
-        id: 2,
-        judul: "Latihan Drama",
-        deskripsi:
-            "Latihan terakhir untuk pertunjukan musim semi yang akan datang dengan kostum lengkap dan makeup. Para pemain siap bersinar di panggung!",
-        tanggal: "2024-03-07",
-        ekskul: "Komunitas Drama",
-    },
-    {
-        id: 3,
-        judul: "Eksperimen Lab Sains",
-        deskripsi:
-            "Eksperimen kimia langsung mempersiapkan kompetisi sains regional. Siswa mengeksplorasi struktur molekul dan reaksi.",
-        tanggal: "2024-03-06",
-        ekskul: "Olimpiade Sains",
-    },
-    {
-        id: 4,
-        judul: "Jalan-jalan Foto di Pusat Kota",
-        deskripsi:
-            "Sesi fotografi grup mengeksplorasi arsitektur urban dan fotografi jalanan. Anggota berhasil mengambil foto kehidupan kota yang menakjubkan!",
-        tanggal: "2024-03-05",
-        ekskul: "Klub Fotografi",
-    },
-    // Additional recent activities
-    {
-        id: 5,
-        judul: "Workshop Programming Robot",
-        deskripsi:
-            "Anggota klub robotika belajar programming lanjutan untuk persiapan kompetisi. Fokus pada algoritma navigasi dan sensor integration.",
-        tanggal: "2024-03-04",
-        ekskul: "Klub Robotika",
-    },
-    {
-        id: 6,
-        judul: "Latihan Vokal Paduan Suara",
-        deskripsi:
-            "Sesi latihan intensif untuk persiapan konser amal. Harmonisasi suara semakin membaik dengan teknik breathing yang benar.",
-        tanggal: "2024-03-03",
-        ekskul: "Paduan Suara",
-    },
-    {
-        id: 7,
-        judul: "Diskusi Buku Bulan Ini",
-        deskripsi:
-            "Klub sastra mendiskusikan novel 'Laskar Pelangi' dengan antusias. Banyak insight menarik tentang pendidikan dan persahabatan.",
-        tanggal: "2024-03-02",
-        ekskul: "Klub Sastra",
-    },
-    {
-        id: 8,
-        judul: "Friendly Match Futsal",
-        deskripsi:
-            "Pertandingan persahabatan melawan sekolah tetangga berakhir dengan kemenangan 3-2. Kerjasama tim semakin solid!",
-        tanggal: "2024-03-01",
-        ekskul: "Tim Futsal",
-    },
-    {
-        id: 9,
-        judul: "Kampanye Reduce Plastic",
-        deskripsi:
-            "Klub lingkungan mengadakan kampanye pengurangan penggunaan plastik di kantin sekolah. Respon positif dari seluruh warga sekolah.",
-        tanggal: "2024-02-28",
-        ekskul: "Klub Lingkungan",
-    },
-    {
-        id: 10,
-        judul: "English Conversation Club",
-        deskripsi:
-            "Sesi conversation dengan native speaker dari program pertukaran pelajar. Topik diskusi tentang cultural differences sangat menarik!",
-        tanggal: "2024-02-27",
-        ekskul: "Klub Bahasa Inggris",
-    },
-];
-
 // Load More Items Function
 function loadMoreItems(section) {
     const state = paginationState[section];
@@ -518,7 +430,7 @@ function loadRecentActivities() {
                             <h3 class="card-title">${activity.judul}</h3>
                         </div>
                         <span class="badge badge-warning">${
-                            activity.ekskul
+                            activity.ekskul.nama
                         }</span>
                     </div>
                     <p class="card-description">${activity.deskripsi}</p>
