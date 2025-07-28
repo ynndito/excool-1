@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             PembinaSeeder::class,
             EkskulSeeder::class,
             SiswaSeeder::class,
-            PengumumanSeeder::class
+            PengumumanSeeder::class,
+            KegiatanSeeder::class,
         ]);
     }
 }
