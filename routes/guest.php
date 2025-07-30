@@ -13,3 +13,4 @@ Route::get('/ekstrasmexa', [GuestController::class, 'index']);
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
+Route::post('/register', [AuthController::class, 'register'])->name('register');

@@ -26,4 +26,9 @@ class AuthController extends Controller
     {
         Auth::logout();
     }
+
+    public function register()
+    {
+        
+    }
 }

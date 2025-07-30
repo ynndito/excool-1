@@ -198,7 +198,7 @@ function toggleFAQ(button) {
             .forEach((ans) => ans.classList.remove("active"));
         document
             .querySelectorAll(".faq-question span")
-            
+
             .forEach((ic) => (ic.textContent = "+"));
 
         // Open this FAQ
@@ -562,7 +562,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
 document
     .getElementById("registerForm")
-    .addEventListener("submit", function (e) {
+    .addEventListener("submit", async function (e) {
         e.preventDefault();
 
         if (!validateForm(this)) {
@@ -590,19 +590,42 @@ document
         submitBtn.innerHTML =
             '<span class="loading-spinner"></span> Membuat akun...';
         submitBtn.disabled = true;
+        let response = await fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ name, email, password, password_confirmation })
+        });
 
-        // Simulate registration
-        setTimeout(() => {
+        let data = await response.json();
+
+        if(data.status == 'success'){
+            window.isLoggedIn = data.user;
             showNotification(
-                "Pendaftaran Berhasil!",
-                `🎉 Selamat datang di EkstraKu, ${name}! Akun Anda telah berhasil dibuat. Sekarang Anda dapat menjelajahi dan bergabung dengan kegiatan!`
+                "Berhasil Daftar!",
+                `Pendaftaran berhasil, selamat datang ${name}!`
             );
             closeModal("registerModal");
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
             e.target.reset();
             clearFormValidation("registerModal");
-        }, 2000);
+
+            loadActivities(); // atau redirect ke halaman dashboard jika perlu
+        }else{
+            inputs.forEach((input) => {
+                input.classList.add('invalid')
+            });
+
+            setTimeout(() => {
+                document.getElementById('errorForm').style.display = "flex";
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 500);
+        }
+
     });
 
 document

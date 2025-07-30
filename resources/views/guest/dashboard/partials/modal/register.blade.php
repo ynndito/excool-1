@@ -4,7 +4,8 @@
             <h3 class="modal-title">Bergabung dengan EkstraKu</h3>
             <button class="close-btn" onclick="closeModal('registerModal')" aria-label="Tutup">&times;</button>
         </div>
-        <form id="registerForm">
+        <form id="registerForm" action="{{ route('register') }}" method= 'POST'>
+            @csrf
             <div class="form-group float-label">
                 <input type="text" id="registerName" class="form-input" placeholder=" " required>
                 <label class="form-label" for="registerName">Nama Lengkap</label>
