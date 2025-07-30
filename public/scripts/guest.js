@@ -132,15 +132,28 @@ function closeMobileMenu() {
 
 // Modal Functions
 function openModal(modalId) {
-    document.getElementById(modalId).classList.add("active");
+    const modal = document.getElementById(modalId);
+    clearFormValidation(modalId)
+
+    // Reset form saat modal dibuka
+    const forms = modal.querySelectorAll("form");
+    forms.forEach(form => form.reset());
+
+    const inputs = modal.querySelectorAll("input");
+    inputs.forEach(input => input.classList.remove("invalid"));
+
+    const errorForm = modal.querySelector("#errorForm");
+    if (errorForm) errorForm.style.display = "none";
+
+    modal.classList.add("active");
     document.body.style.overflow = "hidden";
 }
 
 function closeModal(modalId) {
     document.getElementById(modalId).classList.remove("active");
     document.body.style.overflow = "auto";
-    // Clear validation states when modal is closed
-    clearFormValidation(modalId);
+
+    clearFormValidation(modalId)
 }
 
 // Clear form validation
@@ -185,6 +198,7 @@ function toggleFAQ(button) {
             .forEach((ans) => ans.classList.remove("active"));
         document
             .querySelectorAll(".faq-question span")
+            
             .forEach((ic) => (ic.textContent = "+"));
 
         // Open this FAQ
@@ -225,6 +239,10 @@ function validateForm(form) {
     });
 
     return isValid;
+}
+
+function showLoginRequired() {
+    openModal("loginRequiredModal");
 }
 
 // Load More Items Function
@@ -305,6 +323,15 @@ function loadActivities() {
     itemsToShow.forEach((activity, index) => {
         const card = document.createElement("div");
         card.className = "card";
+
+        const buttonClass = window.isLoggedIn ? "btn btn-primary" : "btn btn-disabled";
+        const buttonText = window.isLoggedIn
+            ? "✨ Bergabung dengan Kegiatan"
+            : "🔒 Login untuk Bergabung";
+        const buttonAction = window.isLoggedIn
+            ? `joinActivity(${activity.id}, '${activity.nama}')`
+            : `showLoginRequired()`;
+
         card.innerHTML = `
                     <div class="card-header">
                         <div>
@@ -318,8 +345,8 @@ function loadActivities() {
                         <span>👥 ${activity.siswa_count} anggota</span>
                     </div>
                     <div class="card-actions">
-                        <button class="btn btn-primary" style="width: 100%;" onclick="joinActivity(${activity.id}, '${activity.nama}')">
-                            ✨ Bergabung dengan Kegiatan
+                        <button class="${buttonClass}" style="width: 100%;" onclick="${buttonAction}">
+                            ${buttonText}
                         </button>
                     </div>
                 `;
@@ -477,15 +504,17 @@ function joinActivity(activityId, activityName) {
 }
 
 // Form Handlers
-document.getElementById("loginForm").addEventListener("submit", function (e) {
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     if (!validateForm(this)) {
         return;
     }
 
+    document.getElementById('errorForm').style.display = "none";
     const email = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;
+    const inputs = document.querySelectorAll("#loginForm input");
 
     // Add loading state
     const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -493,8 +522,20 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     submitBtn.innerHTML = '<span class="loading-spinner"></span> Masuk...';
     submitBtn.disabled = true;
 
-    // Simulate login
-    setTimeout(() => {
+    let response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ email, password })
+    });
+
+    let data = await response.json();
+
+    if(data.status == 'success'){
+        window.isLoggedIn = data.user;
+        // Simulate login
         showNotification(
             "Berhasil Masuk!",
             `Selamat datang kembali! Login berhasil untuk: ${email}`
@@ -504,7 +545,19 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         submitBtn.disabled = false;
         e.target.reset();
         clearFormValidation("loginModal");
-    }, 1500);
+
+        loadActivities();
+    }else{
+        inputs.forEach((input) => {
+            input.classList.add('invalid')
+        });
+
+        setTimeout(() => {
+            document.getElementById('errorForm').style.display = "flex";
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false; // WAJIB supaya bisa login lagi
+        }, 500);
+    }
 });
 
 document
