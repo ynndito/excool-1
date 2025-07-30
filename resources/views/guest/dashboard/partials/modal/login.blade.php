@@ -16,6 +16,7 @@
                 <label class="form-label" for="loginPassword">Kata Sandi</label>
                 <div class="validation-message">Kata sandi harus diisi</div>
             </div>
+            <div class="form-label" id="errorForm" style="display: none; justify-content: center; align-items: center; color: #ef4444ed" for="loginPassword">Email atau kata sandi salah</div>
             <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
                 <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
                     <input type="checkbox" style="width: 1rem; height: 1rem;">
