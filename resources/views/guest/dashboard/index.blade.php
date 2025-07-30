@@ -26,6 +26,7 @@
     @include('guest.dashboard.partials.modal.login')
     @include('guest.dashboard.partials.modal.register')
     @include('guest.dashboard.partials.modal.join-activity')
+    @include('guest.dashboard.partials.modal.login-required')
 
     <!-- Enhanced Notification Container -->
     <div id="notificationContainer" class="notification-container">
