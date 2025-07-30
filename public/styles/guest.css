@@ -435,6 +435,19 @@ body {
     box-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
 }
 
+.btn-disabled {
+    background: var(--border);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn-disabled:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
 /* Load More Button */
 .btn-load-more {
     background: var(--bg-card);
@@ -464,6 +477,34 @@ body {
     border-color: var(--accent);
 }
 
+/* Login Required Message */
+.login-required {
+    background: var(--bg-card);
+    border: 2px dashed var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-secondary);
+    margin: 2rem 0;
+}
+
+.login-required-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.login-required-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.login-required-text {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
 /* Touch Feedback */
 @media (hover: none) {
     .btn:active,
