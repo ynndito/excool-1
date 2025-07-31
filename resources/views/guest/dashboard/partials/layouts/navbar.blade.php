@@ -6,11 +6,12 @@
         <a href="#announcements" class="nav-link">Pengumuman</a>
         <a href="#about" class="nav-link">Tentang</a>
     </div>
-    <div class="nav-buttons">
+    <div class="nav-buttons" id="guestNav">
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Ganti tema">🌙</button>
         <button class="btn btn-secondary" onclick="openModal('loginModal')">Masuk</button>
         <button class="btn btn-primary" onclick="openModal('registerModal')">Daftar</button>
     </div>
+    @include('guest.dashboard.partials.data.profile')
     <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Buka menu">☰</button>
 </nav>
 <div class="mobile-nav" id="mobileNav">

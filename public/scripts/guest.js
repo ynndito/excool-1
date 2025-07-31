@@ -133,14 +133,14 @@ function closeMobileMenu() {
 // Modal Functions
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
-    clearFormValidation(modalId)
+    clearFormValidation(modalId);
 
     // Reset form saat modal dibuka
     const forms = modal.querySelectorAll("form");
-    forms.forEach(form => form.reset());
+    forms.forEach((form) => form.reset());
 
     const inputs = modal.querySelectorAll("input");
-    inputs.forEach(input => input.classList.remove("invalid"));
+    inputs.forEach((input) => input.classList.remove("invalid"));
 
     const errorForm = modal.querySelector("#errorForm");
     if (errorForm) errorForm.style.display = "none";
@@ -153,7 +153,7 @@ function closeModal(modalId) {
     document.getElementById(modalId).classList.remove("active");
     document.body.style.overflow = "auto";
 
-    clearFormValidation(modalId)
+    clearFormValidation(modalId);
 }
 
 // Clear form validation
@@ -324,7 +324,9 @@ function loadActivities() {
         const card = document.createElement("div");
         card.className = "card";
 
-        const buttonClass = window.isLoggedIn ? "btn btn-primary" : "btn btn-disabled";
+        const buttonClass = window.isLoggedIn
+            ? "btn btn-primary"
+            : "btn btn-disabled";
         const buttonText = window.isLoggedIn
             ? "✨ Bergabung dengan Kegiatan"
             : "🔒 Login untuk Bergabung";
@@ -503,62 +505,105 @@ function joinActivity(activityId, activityName) {
     openModal("joinActivityModal");
 }
 
-// Form Handlers
-document.getElementById("loginForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
+function updateUIProfile() {
+    const isMobile = window.innerWidth <= 768; // bisa kamu sesuaikan breakpoint-nya
 
-    if (!validateForm(this)) {
-        return;
+    document.getElementById("guestNav").style.display = "none";
+    document.getElementById("profileNav").style.display = isMobile ? "none" : "flex";
+
+    if (!isMobile) {
+        const name = window.currentUser.name ?? "User";
+        const role = window.currentUser.role ?? "-";
+        const email = window.currentUser.email ?? "-";
+
+        document.getElementById("userAvatar").textContent = name.charAt(0).toUpperCase();
+        document.getElementById("userName").textContent = name;
+        document.getElementById("userRole").textContent = role;
+        document.getElementById("dropdownAvatar").textContent = name.charAt(0).toUpperCase();
+        document.getElementById("dropdownName").textContent = name;
+        document.getElementById("dropdownEmail").textContent = email;
+        document.getElementById("dropdownRole").textContent = role;
     }
+}
 
-    document.getElementById('errorForm').style.display = "none";
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-    const inputs = document.querySelectorAll("#loginForm input");
+function toggleProfileDropdown() {
+    const dropdown = document.getElementById("profileDropdown");
+    dropdown.classList.toggle("show");
+}
 
-    // Add loading state
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<span class="loading-spinner"></span> Masuk...';
-    submitBtn.disabled = true;
+function closeProfileDropdown() {
+    const dropdown = document.getElementById("profileDropdown");
+    dropdown.classList.remove("show");
+}
 
-    let response = await fetch('/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ email, password })
-    });
+function openProfileModal() {
+    closeProfileDropdown();
+    openModal("profileModal");
+    loadProfileData();
+}
 
-    let data = await response.json();
+// Form Handlers
+document
+    .getElementById("loginForm")
+    .addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-    if(data.status == 'success'){
-        window.isLoggedIn = data.user;
-        // Simulate login
-        showNotification(
-            "Berhasil Masuk!",
-            `Selamat datang kembali! Login berhasil untuk: ${email}`
-        );
-        closeModal("loginModal");
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-        e.target.reset();
-        clearFormValidation("loginModal");
+        if (!validateForm(this)) {
+            return;
+        }
 
-        loadActivities();
-    }else{
-        inputs.forEach((input) => {
-            input.classList.add('invalid')
+        document.getElementById("errorForm").style.display = "none";
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
+        const inputs = document.querySelectorAll("#loginForm input");
+
+        // Add loading state
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="loading-spinner"></span> Masuk...';
+        submitBtn.disabled = true;
+
+        let response = await fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+            },
+            body: JSON.stringify({ email, password }),
         });
 
-        setTimeout(() => {
-            document.getElementById('errorForm').style.display = "flex";
+        let data = await response.json();
+
+        if (data.status == "success") {
+            window.currentUser = data.user;
+            // Simulate login
+            showNotification(
+                "Berhasil Masuk!",
+                `Selamat datang kembali! Login berhasil untuk: ${email}`
+            );
+            closeModal("loginModal");
             submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false; // WAJIB supaya bisa login lagi
-        }, 500);
-    }
-});
+            submitBtn.disabled = false;
+            e.target.reset();
+            clearFormValidation("loginModal");
+
+            loadActivities();
+
+            updateUIProfile();
+        } else {
+            inputs.forEach((input) => {
+                input.classList.add("invalid");
+            });
+
+            setTimeout(() => {
+                document.getElementById("errorForm").style.display = "flex";
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false; // WAJIB supaya bisa login lagi
+            }, 500);
+        }
+    });
 
 document
     .getElementById("registerForm")
@@ -683,6 +728,16 @@ document.addEventListener("DOMContentLoaded", function () {
     loadActivities();
     loadAnnouncements();
     loadRecentActivities();
+
+    if (window.currentUser) {
+        updateUIProfile(); // panggil SEKALI saat awal
+    }
+
+    window.addEventListener('resize', () => {
+        if (window.currentUser) {
+            updateUIProfile();
+        }
+    });
 
     // Add intersection observer for animations
     const observerOptions = {

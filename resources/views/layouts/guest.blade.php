@@ -15,6 +15,7 @@
         const sampleAnnouncements = @json($announcements);
         const sampleRecentActivities = @json($recentActivities);
         window.isLoggedIn = @json(Auth::user()) ? true : false;
+        window.currentUser = @json(Auth::user());
     </script>
     <script src="{{ asset('scripts/guest.js') }}"></script>
 </body>
